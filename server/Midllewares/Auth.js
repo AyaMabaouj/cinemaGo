@@ -35,4 +35,14 @@ const generateToken = (id) => {
         }
   });
 
-export {generateToken,protect};
+  const admin = (req, res, next) =>{
+    if (req.user && req.user.isAdmin){
+      next();
+    }
+    else{
+      res.status(401);
+      throw new errorHandler('Not autorized as an admin');
+    }
+  };
+
+export {generateToken,protect, admin};
